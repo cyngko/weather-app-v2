@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import './App.css';
 import Navbar from './components/NavBar';
+import LocationDate from './components/LocationDate';
+import WeatherContainer from './components/WeatherContainer';
 
 const api = {
   key: 'c2d1918f1dfd1325c2ac8ef502498937',
@@ -34,6 +36,12 @@ function App() {
       <header>
         <Navbar query={query} onHandleSearch={handleSearch} onSearch={search} />
       </header>
+      {typeof weather.main != 'undefined' ? (
+        <main>
+          <LocationDate location={`${weather.name}, ${weather.sys.country}`} />
+          <WeatherContainer weather={weather} />
+        </main>
+      ) : null}
     </div>
   );
 }
