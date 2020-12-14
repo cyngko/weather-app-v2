@@ -3,14 +3,14 @@ import './App.css';
 import Navbar from './components/NavBar';
 import LocationDate from './components/LocationDate';
 import WeatherContainer from './components/WeatherContainer';
-const palceholder = (
+const placeholder = (
   <svg
     id='fe120295-eefa-41b9-b614-b1586882fedf'
     data-name='Layer 1'
     xmlns='http://www.w3.org/2000/svg'
     width='903.81496'
     height='419'
-    className='palceholderImage'
+    className='placeholderImage'
     viewBox='0 0 903.81496 419'>
     <path
       d='M1002.29825,657.63462c-7.66862-.31841-14.65546-3.4134-17.8161-8.20809q-.22188-.3366-.41782-.68273c-1.15407-2.04287-1.5142-4.39169-.2526-6.40454s4.41342-3.54208,7.5786-3.22463,5.63632,2.842,4.32649,4.84032c-.29278-4.03819-.53206-8.28109,2.72379-11.79607a11.8971,11.8971,0,0,1,6.665-3.44471c6.56018-1.15377,10.91609,2.5554,11.78838,6.30113.64385,2.76482-.24562,5.57713-1.13059,8.31052,2.72833-3.22649,9.21772-4.662,14.18726-3.13827s7.72721,5.7944,6.02891,9.3367c-2.00047,4.17253-8.66851,6.32973-14.8625,7.46953C1016.00221,657.935,1008.33266,657.88517,1002.29825,657.63462Z'
@@ -235,6 +235,7 @@ const api = {
 function App() {
   const [query, setQuery] = useState('');
   const [weather, setWeather] = useState({});
+  const [mode, setMode] = useState(true); //true => light
 
   const search = (evt) => {
     if (evt.key === 'Enter') {
@@ -250,23 +251,39 @@ function App() {
     }
   };
 
+  const darkMode = {
+    background: '#081B33',
+    color: '#eee',
+  };
+
+  const handleModeChange = () => {
+    const newMode = mode ? false : true;
+    setMode(newMode);
+  };
   const handleSearch = (e) => {
     setQuery(e.target.value);
   };
 
   return (
-    <div className='App'>
-      <header>
-        <Navbar query={query} onHandleSearch={handleSearch} onSearch={search} />
-      </header>
-      {typeof weather.main != 'undefined' ? (
-        <main>
-          <LocationDate location={`${weather.name}, ${weather.sys.country}`} />
-          <WeatherContainer weather={weather} />
-        </main>
-      ) : (
-        <>{palceholder}</>
-      )}
+    <div className='App' style={mode ? null : darkMode}>
+      <div className='AppContent'>
+        <header>
+          <Navbar
+            mode={mode}
+            onModeChange={handleModeChange}
+            query={query}
+            onHandleSearch={handleSearch}
+            onSearch={search}
+          />
+        </header>
+        {typeof weather.main != 'undefined' ? (
+          <main>
+            <WeatherContainer weather={weather} />
+          </main>
+        ) : (
+          <div className='AppContent'>{placeholder}</div>
+        )}
+      </div>
     </div>
   );
 }

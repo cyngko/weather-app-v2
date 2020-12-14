@@ -9,16 +9,22 @@ export default function Navbar({
   onHandleSearch,
   onSearch,
 }) {
-  const test = true;
   return (
     <div className='Navbar'>
       <div className='logo'>Cyngko WeatherCast</div>
-      <SearchBar
-        query={query}
-        onHandleSearch={onHandleSearch}
-        onSearch={onSearch}
-      />
-      {test ? <Sun /> : <Moon />}
+      <div className='controlContainer'>
+        <SearchBar
+          mode={mode}
+          query={query}
+          onHandleSearch={onHandleSearch}
+          onSearch={onSearch}
+        />
+        {mode ? (
+          <Sun style={{ cursor: 'pointer' }} onClick={() => onModeChange()} />
+        ) : (
+          <Moon style={{ cursor: 'pointer' }} onClick={() => onModeChange()} />
+        )}
+      </div>
     </div>
   );
 }
