@@ -117,6 +117,10 @@
 @media screen and (max-width: 768px) {
   .placeholderImage {
     width: 80%;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
   }
   .logo {
     display: none;
