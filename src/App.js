@@ -254,6 +254,10 @@ function App() {
   const darkMode = {
     background: '#081B33',
     color: '#eee',
+    height: `${window.innerHeight}px`,
+  };
+  const lightMode = {
+    height: `${window.innerHeight}px`,
   };
 
   const handleModeChange = () => {
@@ -265,7 +269,7 @@ function App() {
   };
 
   return (
-    <div className='App' style={mode ? null : darkMode}>
+    <div className='App' style={mode ? lightMode : darkMode}>
       <div className='AppContent'>
         <header>
           <Navbar
